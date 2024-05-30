@@ -1,0 +1,90 @@
+class Node05 {
+    Node05 prev;
+    int data;
+    int jarak;
+    Node05 next;
+
+    public Node05(Node05 prev, int data, int jarak, Node05 next) {
+        this.prev = prev;
+        this.data = data;
+        this.jarak = jarak;
+        this.next = next;
+    }
+}
+
+public class DoubleLingkedLists05 {
+    Node05 head;
+    int size;
+
+    public DoubleLingkedLists05() {
+        head = null;
+        size = 0;
+    }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public void addFirst(int data, int jarak) {
+        Node05 newNode = new Node05(null, data, jarak, head);
+        if (head != null) {
+            head.prev = newNode;
+        }
+        head = newNode;
+        size++;
+    }
+
+    public int getJarak(int index) throws Exception {
+        if (isEmpty() || index >= size) {
+            throw new Exception("Nilai index di luar batas");
+        }
+        Node05 tmp = head;
+        for (int i = 0; i < index; i++) {
+            tmp = tmp.next;
+        }
+        return tmp.jarak;
+    }
+
+    public void remove(int data) throws Exception {
+        if (isEmpty()) {
+            throw new Exception("List kosong");
+        }
+        Node05 current = head;
+        while (current != null) {
+            if (current.data == data) {
+                if (current.prev != null) {
+                    current.prev.next = current.next;
+                } else {
+                    head = current.next;
+                }
+                if (current.next != null) {
+                    current.next.prev = current.prev;
+                }
+                size--;
+                return;
+            }
+            current = current.next;
+        }
+        throw new Exception("Item tidak ditemukan");
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public int get(int index) throws Exception {
+        if (isEmpty() || index >= size) {
+            throw new Exception("Nilai index di luar batas");
+        }
+        Node05 tmp = head;
+        for (int i = 0; i < index; i++) {
+            tmp = tmp.next;
+        }
+        return tmp.data;
+    }
+
+    public void clear() {
+        head = null;
+        size = 0;
+    }
+}
